@@ -199,20 +199,36 @@
         document.getElementById('year').value = new Date().getFullYear();
 
         async function fetchCountries() {
-            const apiKey = 'f974de79ff214d979899a2c0cdbb7733';
-            try {
-                const response = await fetch(`https://holidays.abstractapi.com/v1/countries/?api_key=${apiKey}`);
-                if (!response.ok) throw new Error('Failed to fetch countries');
-                
-                const countries = await response.json();
-                const select = document.getElementById('country');
-                
-                countries.sort((a, b) => a.name.localeCompare(b.name)).forEach(country => {
-                    const option = document.createElement('option');
-                    option.value = country.code;
-                    option.textContent = `${country.name} ${getCountryFlag(country.code)}`;
-                    select.appendChild(option);
-                });
+            const countries = [
+                { code: 'US', name: 'United States' },
+                { code: 'GB', name: 'United Kingdom' },
+                { code: 'DE', name: 'Germany' },
+                { code: 'FR', name: 'France' },
+                { code: 'ES', name: 'Spain' },
+                { code: 'IT', name: 'Italy' },
+                { code: 'CA', name: 'Canada' },
+                { code: 'AU', name: 'Australia' },
+                { code: 'JP', name: 'Japan' },
+                { code: 'CN', name: 'China' },
+                { code: 'IN', name: 'India' },
+                { code: 'BR', name: 'Brazil' },
+                { code: 'MX', name: 'Mexico' },
+                { code: 'RU', name: 'Russia' },
+                { code: 'ZA', name: 'South Africa' },
+                { code: 'SE', name: 'Sweden' },
+                { code: 'NO', name: 'Norway' },
+                { code: 'DK', name: 'Denmark' },
+                { code: 'FI', name: 'Finland' },
+                { code: 'NL', name: 'Netherlands' }
+            ];
+            
+            const select = document.getElementById('country');
+            countries.sort((a, b) => a.name.localeCompare(b.name)).forEach(country => {
+                const option = document.createElement('option');
+                option.value = country.code;
+                option.textContent = `${country.name} ${getCountryFlag(country.code)}`;
+                select.appendChild(option);
+            });
             } catch (error) {
                 console.error('Error fetching countries:', error);
                 document.getElementById('error').textContent = '⚠️ Error loading countries. Please refresh the page.';
